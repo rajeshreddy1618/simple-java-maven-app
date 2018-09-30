@@ -1,15 +1,17 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine' 
-            args '-v /usr/local/src/apache-maven'
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
         }
     }
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package' 
-                stage('Test') { 
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') { 
             steps {
                 sh 'mvn test' 
             }
